@@ -5,7 +5,7 @@ import DataCollectionStage from './stages/DataCollectionStage';
 import TrainingStage from './stages/TrainingStage';
 import EmissionsStage from './stages/EmissionsStage';
 import DeploymentStage from './stages/DeploymentStage';
-import MessagePopup from './ui/MessagePopup';
+import MessagePopup from './ui/MessagePopUp';
 import ProgressTracker from './ui/ProgressTracker';
 import './EnergyPipeline.css';
 
