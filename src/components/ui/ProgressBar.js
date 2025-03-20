@@ -17,3 +17,5 @@ const ProgressBar = ({ progress, label, color }) => {
     </div>
   );
 };
+
+export default ProgressBar;

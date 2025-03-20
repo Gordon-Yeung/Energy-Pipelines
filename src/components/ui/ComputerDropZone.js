@@ -17,3 +17,5 @@ const ComputerDropZone = ({ dataAmount, onDragOver, onDragLeave, onDrop }) => {
     </div>
   );
 };
+
+export default ComputerDropZone;

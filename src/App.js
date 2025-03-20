@@ -1,6 +1,6 @@
 // Main component - App.js or index.js
 import React from 'react';
-import EnergyPipeline from './src/components/EnergyPipeline';
+import EnergyPipeline from './components/EnergyPipeline';
 
 function App() {
   return (

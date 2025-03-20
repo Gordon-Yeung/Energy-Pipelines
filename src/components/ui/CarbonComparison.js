@@ -45,3 +45,4 @@ const CarbonComparison = ({ co2Amount }) => {
 };
 
 export default CarbonComparison;
+

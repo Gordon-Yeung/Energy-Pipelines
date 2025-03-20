@@ -22,3 +22,5 @@ const DataMeter = ({ dataAmount, comparison }) => {
     </div>
   );
 };
+
+export default DataMeter;
