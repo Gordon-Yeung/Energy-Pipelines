@@ -1,27 +1,43 @@
 // components/ui/ResourceMeter.js
 import React from 'react';
 
-const ResourceMeter = ({ label, value, unit, maxValue, color, comparison, detailedComparison }) => {
-  const percentage = Math.min(100, (value / maxValue) * 100);
-  
+const ResourceMeter = ({ 
+  label, 
+  value, 
+  unit, 
+  maxValue, 
+  color, 
+  comparison,
+  detailedComparison 
+}) => {
+  const percentage = Math.min((value / maxValue) * 100, 100);
+
   return (
     <div className="resource-meter">
-      <div className="resource-meter-header">
-        <span>{label}</span>
-        <span>{value} {unit}</span>
+      <div className="meter-header">
+        <span className="meter-label">{label}</span>
+        <span className="meter-value">{value} {unit}</span>
       </div>
-      <div className="resource-meter-bar">
+      <div className="meter-bar-container">
         <div 
-          className={`resource-meter-progress ${color}`}
+          className={`meter-bar ${color}`} 
           style={{ width: `${percentage}%` }}
-        ></div>
+        />
       </div>
-      <div className="resource-meter-comparison">{comparison}</div>
+      {comparison && (
+        <div className="meter-comparison">
+          {comparison}
+        </div>
+      )}
       {detailedComparison && (
-        <div className="resource-meter-detailed">{detailedComparison}</div>
+        <div className="meter-detailed-comparison">
+          {detailedComparison}
+        </div>
       )}
     </div>
   );
 };
+
+export default ResourceMeter;
 
 

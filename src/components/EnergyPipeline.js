@@ -1,7 +1,7 @@
 // components/EnergyPipeline.js
 import React, { useState, useEffect } from 'react';
-import IntroStage from './stages/IntroStage';
-import DataCollectionStage from './stages/DataCollectionStage';
+import IntroStage from './stages/introstages/IntroStage';
+import DataCollectionStage from './stages/introstages/DataCollectionStage';
 import TrainingStage from './stages/TrainingStage';
 import EmissionsStage from './stages/EmissionsStage';
 import DeploymentStage from './stages/DeploymentStage';
