@@ -7,6 +7,7 @@ import EmissionsStage from './stages/EmissionsStage';
 import DeploymentStage from './stages/DeploymentStage';
 import MessagePopup from './ui/MessagePopUp';
 import ProgressTracker from './ui/ProgressTracker';
+import TrainingCompletePopup from './ui/TrainingCompletePopup';
 import './EnergyPipeline.css';
 
 const EnergyPipeline = () => {
@@ -22,6 +23,7 @@ const EnergyPipeline = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [training, setTraining] = useState(false);
   const [gpuCount, setGpuCount] = useState(4);
+  const [showTrainingComplete, setShowTrainingComplete] = useState(false);
 
   // Data for comparisons and messages
   const comparisons = {
@@ -122,18 +124,11 @@ const EnergyPipeline = () => {
             }
           }
           
-          // Move to emissions stage at 50%
-          if (newValue >= 50 && prev < 50) {
-            setStage(3);
-          }
-          
           // Complete training
           if (newValue >= 100) {
             clearInterval(interval);
             setTraining(false);
-            setStage(4); // Move to deployment
-            setMessage("Training complete! Your model is ready for deployment, but the environmental costs have been substantial.");
-            setShowMessage(true);
+            setShowTrainingComplete(true);
             return 100;
           }
           
@@ -202,6 +197,12 @@ const EnergyPipeline = () => {
     setShowMessage(false);
   };
 
+  // Handle proceeding to emissions stage
+  const handleProceedToEmissions = () => {
+    setShowTrainingComplete(false);
+    setStage(3);
+  };
+
   return (
     <div className="energy-pipeline-container">
       <h1 className="main-title">The Energy Pipeline – How Does an LLM Get Born?</h1>
@@ -267,8 +268,19 @@ const EnergyPipeline = () => {
         />
       )}
       
+      {/* Training completion popup */}
+      {showTrainingComplete && (
+        <TrainingCompletePopup
+          powerUsed={powerUsed}
+          waterUsed={waterUsed}
+          co2Emitted={co2Emitted}
+          onProceed={handleProceedToEmissions}
+          onClose={() => setShowTrainingComplete(false)}
+        />
+      )}
+      
       {/* Message popup */}
-      {showMessage && (
+      {showMessage && !showTrainingComplete && (
         <MessagePopup message={message} onClose={closeMessage} />
       )}
     </div>
