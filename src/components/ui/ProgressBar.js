@@ -9,7 +9,7 @@ const ProgressBar = ({ progress, label, color }) => {
           className={`progress-bar-fill ${color}`}
           style={{ width: `${progress}%` }}
         >
-          {progress > 10 && (
+          {progress > 2 && (
             <span className="progress-bar-label">{label}</span>
           )}
         </div>

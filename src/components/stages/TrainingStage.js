@@ -38,31 +38,96 @@ const TrainingStage = ({
     }
   };
 
-  // Get water comparison based on thresholds
-  const getWaterComparison = () => {
-    if (waterUsed < 50) {
-      return null; // Don't show comparison for negligible usage
-    } else if (waterUsed < 150) {
-      return "≈ taking a 5-minute shower";
-    } else if (waterUsed < 500) {
-      return "≈ filling a bathtub";
-    } else if (waterUsed < 1000) {
-      return "≈ watering a garden for a week";
-    } else if (waterUsed < 5000) {
-      return "≈ filling a small swimming pool";
+  // Get power comparison icon based on amount
+  const getPowerIcon = () => {
+    if (powerUsed < 1) {
+      return "📱"; // smartphone
+    } else if (powerUsed < 5) {
+      return "🧊"; // refrigerator
+    } else if (powerUsed < 20) {
+      return "🏠"; // single home
     } else {
-      return `≈ filling ${Math.round(waterUsed/5000)} swimming pools`;
+      return "🏘️"; // multiple homes
     }
   };
 
-  // Get CO2 comparison
-  const getCO2Comparison = () => {
-    if (co2Emitted < 1) {
-      return null; // Don't show comparison for negligible emissions
-    } else if (co2Emitted < 5) {
-      return `≈ driving a car for ${Math.round(co2Emitted * 4)} km`;
+  // Get water comparison based on thresholds
+  const getWaterComparison = () => {
+    if (waterUsed < 1) {
+      return null; // Don't show comparison for negligible usage
+    } else if (waterUsed < 10) {
+      return `≈ drinking water for ${Math.round(waterUsed / 2)} people per day`; // ~2L per person per day
+    } else if (waterUsed < 30) {
+      return `≈ flushing a toilet ${Math.round(waterUsed / 10)} times`;
+    } else if (waterUsed < 100) {
+      return `≈ taking a ${Math.round(waterUsed / 30)}-minute shower`;
+    } else if (waterUsed < 500) {
+      return `≈ filling a bathtub ${Math.round(waterUsed / 150)} times`;
+    } else if (waterUsed < 1000) {
+      return `≈ washing dishes by hand ${Math.round(waterUsed / 50)} times`;
+    } else if (waterUsed < 5000) {
+      return `≈ doing laundry ${Math.round(waterUsed / 100)} loads`;
+    } else if (waterUsed < 50000) {
+      return `≈ providing ${Math.round(waterUsed / 500)} people's daily water needs`;
     } else {
-      return `≈ ${Math.round(co2Emitted/2)} NY-London flights`;
+      return `≈ filling an Olympic swimming pool ${Math.round(waterUsed / 2500000)} times`;
+    }
+  };
+
+  // Get water comparison icon based on amount
+  const getWaterIcon = () => {
+    if (waterUsed < 10) {
+      return "🥤"; // drinking water
+    } else if (waterUsed < 30) {
+      return "🚽"; // toilet
+    } else if (waterUsed < 100) {
+      return "🚿"; // shower
+    } else if (waterUsed < 500) {
+      return "🛁"; // bathtub
+    } else if (waterUsed < 1000) {
+      return "🍽️"; // dishes
+    } else if (waterUsed < 5000) {
+      return "👕"; // laundry
+    } else if (waterUsed < 50000) {
+      return "🏘️"; // people/community
+    } else {
+      return "🏊"; // swimming pool
+    }
+  };
+
+  // Get CO2 comparison based on more accurate data
+  const getCO2Comparison = () => {
+    if (co2Emitted < 0.1) {
+      return null; // Don't show comparison for negligible emissions
+    } else if (co2Emitted < 1) {
+      return `≈ driving a car ${Math.round(co2Emitted * 6)} km`; // ~167g CO2 per km
+    } else if (co2Emitted < 5) {
+      return `≈ watching Netflix for ${Math.round(co2Emitted * 10)} hours`;
+    } else if (co2Emitted < 50) {
+      return `≈ using a gas stove for ${Math.round(co2Emitted / 0.2)} hours`;
+    } else if (co2Emitted < 500) {
+      return `≈ taking ${Math.round(co2Emitted / 100)} round-trips from NYC to Washington DC by car`;
+    } else if (co2Emitted < 1000) {
+      return `≈ taking ${Math.round(co2Emitted / 900)} NY-London flights`;
+    } else {
+      return `≈ offsetting CO₂ by planting ${Math.round(co2Emitted / 22)} trees`;
+    }
+  };
+
+  // Get CO2 comparison icon based on amount
+  const getCO2Icon = () => {
+    if (co2Emitted < 1) {
+      return "🚗"; // short car trip
+    } else if (co2Emitted < 5) {
+      return "📺"; // Netflix/TV
+    } else if (co2Emitted < 50) {
+      return "🔥"; // gas stove
+    } else if (co2Emitted < 500) {
+      return "🚙"; // longer car trips
+    } else if (co2Emitted < 1000) {
+      return "✈️"; // flights
+    } else {
+      return "🌳"; // trees/offset
     }
   };
   
@@ -140,7 +205,7 @@ const TrainingStage = ({
               </div>
               {getPowerComparison() && (
                 <div className="resource-comparison">
-                  <span className="resource-comparison-icon">{powerUsed < 5 ? "📱" : "🏠"}</span>
+                  <span className="resource-comparison-icon">{getPowerIcon()}</span>
                   {getPowerComparison()}
                 </div>
               )}
@@ -159,7 +224,7 @@ const TrainingStage = ({
               </div>
               {getWaterComparison() && (
                 <div className="resource-comparison">
-                  <span className="resource-comparison-icon">{waterUsed < 500 ? "🚿" : "🏊"}</span>
+                  <span className="resource-comparison-icon">{getWaterIcon()}</span>
                   {getWaterComparison()}
                 </div>
               )}
@@ -178,7 +243,7 @@ const TrainingStage = ({
               </div>
               {getCO2Comparison() && (
                 <div className="resource-comparison">
-                  <span className="resource-comparison-icon">{co2Emitted < 5 ? "🚗" : "✈️"}</span>
+                  <span className="resource-comparison-icon">{getCO2Icon()}</span>
                   {getCO2Comparison()}
                 </div>
               )}

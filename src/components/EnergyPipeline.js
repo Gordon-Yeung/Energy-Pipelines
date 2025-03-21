@@ -88,8 +88,13 @@ const EnergyPipeline = () => {
           // Resource consumption increases with each step, scaled by GPU count
           const powerScale = gpuCount / 4; // Base scaling for initial 4 GPUs
           const powerInc = powerScale * (dataAmount / 50) * increment;
-          const waterInc = powerScale * (dataAmount / 20) * increment * 1.5; // Increased water usage
-          const co2Inc = powerScale * (dataAmount / 100) * increment;
+          
+          // Water usage starts slower but ramps up with progress and GPU count
+          const waterScale = Math.pow(newValue / 25, 1.5); // Exponential scaling with progress
+          const waterInc = powerScale * (dataAmount / 100) * increment * waterScale;
+          
+          // CO2 emissions stay proportional to power usage
+          const co2Inc = powerInc * 0.4; // ~0.4 kg CO2 per kWh (average grid mix)
           
           setPowerUsed(p => p + powerInc);
           setWaterUsed(w => w + waterInc);
