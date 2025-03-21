@@ -9,7 +9,7 @@ const TrainingCompletePopup = ({ onProceed, onClose }) => {
         <h2>🎉 Training Complete!</h2>
         
         <p className="completion-message">
-          Your AI model has finished training. Ready to explore its environmental impact?
+          Your AI model has finished training! But at what cost? Dive into the unseen environmental impact of its creation.
         </p>
 
         <div className="popup-actions">
