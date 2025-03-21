@@ -1206,3 +1206,128 @@
     font-size: 15px;
   }
 }
+
+/* Emissions Stage */
+.emissions-stage {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.resource-summary.animated {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 32px 0;
+  padding: 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.resource-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease;
+}
+
+.resource-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resource-icon {
+  font-size: 32px;
+  margin-right: 16px;
+}
+
+.resource-details {
+  flex: 1;
+}
+
+.resource-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 4px;
+}
+
+.resource-label {
+  font-size: 14px;
+  color: #718096;
+}
+
+.impact-message-box {
+  margin: 32px 0;
+  padding: 24px;
+  background: #2d3748;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.impact-message-box p {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.impact-message-box p:last-child {
+  margin-bottom: 0;
+}
+
+.impact-message-box strong {
+  color: #90cdf4;
+}
+
+.warning-text {
+  color: #fc8181 !important;
+  font-weight: 600;
+  font-size: 18px !important;
+}
+
+.proceed-deployment-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.proceed-deployment-button {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(56, 161, 105, 0.3);
+}
+
+.proceed-deployment-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(56, 161, 105, 0.4);
+  background: linear-gradient(135deg, #38a169, #2f855a);
+}
+
+@media (max-width: 768px) {
+  .resource-summary.animated {
+    grid-template-columns: 1fr;
+  }
+  
+  .impact-message-box {
+    margin: 24px 0;
+    padding: 20px;
+  }
+  
+  .proceed-deployment-button {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}

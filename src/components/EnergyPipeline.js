@@ -242,7 +242,7 @@ const EnergyPipeline = () => {
         />
       )}
       
-      {(stage === 2 || stage === 3) && (
+      {stage === 2 && (
         <TrainingStage 
           stage={stage}
           trainingProgress={trainingProgress}
@@ -253,6 +253,20 @@ const EnergyPipeline = () => {
           onAddGpus={addGpus}
           getPowerComparison={() => getComparison('power', powerUsed)}
           getWaterComparison={() => getComparison('water', waterUsed)}
+        />
+      )}
+
+      {stage === 3 && (
+        <EmissionsStage 
+          dataAmount={dataAmount}
+          powerUsed={powerUsed}
+          waterUsed={waterUsed}
+          co2Emitted={co2Emitted}
+          onProceedToDeployment={() => {
+            setStage(4);
+            setMessage("Welcome to the deployment stage. Let's see the ongoing environmental costs of your model.");
+            setShowMessage(true);
+          }}
         />
       )}
       
