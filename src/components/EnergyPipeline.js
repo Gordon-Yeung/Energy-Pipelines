@@ -202,7 +202,25 @@ const EnergyPipeline = () => {
       <h1 className="main-title">The Energy Pipeline – How Does an LLM Get Born?</h1>
       
       {/* Progress tracker */}
-      <ProgressTracker currentStage={stage} />
+      <ProgressTracker 
+        currentStage={stage} 
+        onStageClick={(newStage) => {
+          setStage(newStage);
+          if (newStage === 0) {
+            // Reset state when going back to intro
+            setDataAmount(0);
+            setTrainingProgress(0);
+            setPowerUsed(0);
+            setWaterUsed(0);
+            setCo2Emitted(0);
+            setQueryCount(0);
+            setGpuCount(4);
+            setTraining(false);
+            setMessage("Welcome back! Start your journey again.");
+            setShowMessage(true);
+          }
+        }}
+      />
       
       {/* Stage content */}
       {stage === 0 && (
