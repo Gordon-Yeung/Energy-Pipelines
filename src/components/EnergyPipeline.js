@@ -172,7 +172,7 @@ const EnergyPipeline = () => {
   
   // Reset the simulation
   const resetSimulation = () => {
-    setStage(1);
+    setStage(0);
     setDataAmount(0);
     setTrainingProgress(0);
     setPowerUsed(0);
@@ -197,10 +197,50 @@ const EnergyPipeline = () => {
     setShowMessage(false);
   };
 
+  // Handle stage navigation
+  const handleStageClick = (clickedStage) => {
+    // Allow navigation to previous stages
+    if (clickedStage < stage) {
+      setStage(clickedStage);
+      
+      // Don't reset state when navigating back
+      if (clickedStage === 0) {
+        setMessage("Welcome back to the introduction stage!");
+      } else if (clickedStage === 1) {
+        setMessage("Continue collecting data for your model.");
+      } else if (clickedStage === 2) {
+        setMessage("Resume training your model.");
+      } else if (clickedStage === 3) {
+        setMessage("Review the environmental impact of your model.");
+      }
+      setShowMessage(true);
+    }
+    // Allow navigation to emissions stage if training is complete
+    else if (clickedStage === 3 && trainingProgress >= 100) {
+      setStage(3);
+      setMessage("Training complete! Let's examine the environmental impact.");
+      setShowMessage(true);
+    }
+  };
+
   // Handle proceeding to emissions stage
   const handleProceedToEmissions = () => {
     setShowTrainingComplete(false);
     setStage(3);
+  };
+
+  // Handle training completion
+  const handleTrainingComplete = () => {
+    setStage(3);
+    setMessage("Training complete! Let's examine the environmental impact.");
+    setShowMessage(true);
+  };
+
+  // Handle proceeding to deployment
+  const handleProceedToDeployment = () => {
+    setStage(4);
+    setMessage("Welcome to the deployment stage! Let's explore the ongoing environmental costs.");
+    setShowMessage(true);
   };
 
   return (
@@ -210,77 +250,62 @@ const EnergyPipeline = () => {
       {/* Progress tracker */}
       <ProgressTracker 
         currentStage={stage} 
-        onStageClick={(newStage) => {
-          setStage(newStage);
-          if (newStage === 0) {
-            // Reset state when going back to intro
-            setDataAmount(0);
-            setTrainingProgress(0);
-            setPowerUsed(0);
-            setWaterUsed(0);
-            setCo2Emitted(0);
-            setQueryCount(0);
-            setGpuCount(4);
-            setTraining(false);
-            setMessage("Welcome back! Start your journey again.");
-            setShowMessage(true);
-          }
-        }}
+        onStageClick={handleStageClick}
+        trainingProgress={trainingProgress}
       />
       
       {/* Stage content */}
-      {stage === 0 && (
-        <IntroStage onStart={startExperience} />
-      )}
-      
-      {stage === 1 && (
-        <DataCollectionStage 
-          dataAmount={dataAmount} 
-          onAddData={updateDataAmount}
-          onStartTraining={startTraining}
-          getBookComparison={() => getComparison('books', dataAmount)}
-        />
-      )}
-      
-      {stage === 2 && (
-        <TrainingStage 
-          stage={stage}
-          trainingProgress={trainingProgress}
-          powerUsed={powerUsed}
-          waterUsed={waterUsed}
-          co2Emitted={co2Emitted}
-          gpuCount={gpuCount}
-          onAddGpus={addGpus}
-          getPowerComparison={() => getComparison('power', powerUsed)}
-          getWaterComparison={() => getComparison('water', waterUsed)}
-        />
-      )}
-
-      {stage === 3 && (
-        <EmissionsStage 
-          dataAmount={dataAmount}
-          powerUsed={powerUsed}
-          waterUsed={waterUsed}
-          co2Emitted={co2Emitted}
-          onProceedToDeployment={() => {
-            setStage(4);
-            setMessage("Welcome to the deployment stage. Let's see the ongoing environmental costs of your model.");
-            setShowMessage(true);
-          }}
-        />
-      )}
-      
-      {stage === 4 && (
-        <DeploymentStage 
-          dataAmount={dataAmount}
-          powerUsed={powerUsed}
-          waterUsed={waterUsed}
-          co2Emitted={co2Emitted}
-          queryCount={queryCount}
-          onSimulateQuery={simulateQuery}
-          onReset={resetSimulation}
-        />
-      )}
+      <div className="stage-content">
+        {stage === 0 && (
+          <IntroStage onStart={startExperience} />
+        )}
+        
+        {stage === 1 && (
+          <DataCollectionStage 
+            dataAmount={dataAmount}
+            onAddData={updateDataAmount}
+            onStartTraining={startTraining}
+            getBookComparison={() => getComparison('books', dataAmount)}
+          />
+        )}
+        
+        {stage === 2 && (
+          <TrainingStage 
+            stage={stage}
+            trainingProgress={trainingProgress}
+            powerUsed={powerUsed}
+            waterUsed={waterUsed}
+            co2Emitted={co2Emitted}
+            gpuCount={gpuCount}
+            onAddGpus={addGpus}
+            getPowerComparison={() => getComparison('power', powerUsed)}
+            getWaterComparison={() => getComparison('water', waterUsed)}
+            onTrainingComplete={handleTrainingComplete}
+          />
+        )}
+        
+        {stage === 3 && (
+          <EmissionsStage 
+            dataAmount={dataAmount}
+            powerUsed={powerUsed}
+            waterUsed={waterUsed}
+            co2Emitted={co2Emitted}
+            onProceedToDeployment={handleProceedToDeployment}
+          />
+        )}
+        
+        {stage === 4 && (
+          <DeploymentStage 
+            dataAmount={dataAmount}
+            powerUsed={powerUsed}
+            waterUsed={waterUsed}
+            co2Emitted={co2Emitted}
+            queryCount={queryCount}
+            onSimulateQuery={simulateQuery}
+            onReset={resetSimulation}
+          />
+        )}
+      </div>
       
       {/* Training completion popup */}
       {showTrainingComplete && (

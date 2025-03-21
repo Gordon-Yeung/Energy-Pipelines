@@ -30,11 +30,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 0.5;
   position: relative;
   padding: 0.5rem;
   border-radius: 8px;
   transition: all 0.3s ease;
+}
+
+.stage.dimmed {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .stage.active {
@@ -43,11 +47,13 @@
 
 .stage.clickable {
   cursor: pointer;
+  opacity: 0.7;
 }
 
 .stage.clickable:hover {
   background-color: rgba(76, 175, 80, 0.1);
   transform: translateY(-2px);
+  opacity: 1;
 }
 
 .stage.clickable:hover .stage-number {
@@ -84,7 +90,91 @@
 
 .stage.active .stage-name {
   color: #2c3e50;
+}
+
+.stage-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.progress-stage.active .stage-icon {
+  background: #10b981;
+  color: white;
+}
+
+.progress-stage.completed .stage-icon {
+  background: #10b981;
+  color: white;
+}
+
+.stage-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-title {
   font-weight: 600;
+  color: #1f2937;
+}
+
+.stage-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.stage-connector {
+  position: relative;
+  width: 2rem;
+  height: 2px;
+  margin: 0 1rem;
+}
+
+.connector-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e5e7eb;
+  transform: translateY(-50%);
+}
+
+.progress-stage.completed .connector-line {
+  background: #10b981;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .progress-tracker {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .progress-stage {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .stage-connector {
+    width: 2px;
+    height: 2rem;
+    margin: 0.5rem 0;
+  }
+
+  .connector-line {
+    width: 2px;
+    height: 100%;
+    transform: none;
+  }
 }
 
 /* Intro Stage */
@@ -1330,4 +1420,29 @@
     width: 100%;
     padding: 12px 20px;
   }
+}
+
+.proceed-emissions-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.proceed-emissions-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+}
+
+.proceed-emissions-button:active {
+  transform: translateY(0);
 }

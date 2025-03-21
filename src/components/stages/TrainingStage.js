@@ -13,7 +13,8 @@ const TrainingStage = ({
   gpuCount,
   onAddGpus,
   getPowerComparison,
-  getWaterComparison
+  getWaterComparison,
+  onTrainingComplete
 }) => {
   
   // Handle adding more GPUs to accelerate training

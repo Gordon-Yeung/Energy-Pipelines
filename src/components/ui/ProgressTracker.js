@@ -1,7 +1,7 @@
 // components/ui/ProgressTracker.js
 import React from 'react';
 
-const ProgressTracker = ({ currentStage, onStageClick }) => {
+const ProgressTracker = ({ currentStage, onStageClick, trainingProgress }) => {
   const stages = [
     'Introduction',
     'Data Collection',
@@ -11,8 +11,12 @@ const ProgressTracker = ({ currentStage, onStageClick }) => {
   ];
 
   const handleStageClick = (index) => {
-    // Only allow clicking to previous stages
+    // Allow clicking to previous stages
     if (index < currentStage) {
+      onStageClick(index);
+    }
+    // Allow clicking to emissions stage if training is complete
+    else if (index === 3 && trainingProgress >= 100) {
       onStageClick(index);
     }
   };
@@ -23,10 +27,10 @@ const ProgressTracker = ({ currentStage, onStageClick }) => {
         {stages.map((stage, index) => (
           <div 
             key={index}
-            className={`stage ${index <= currentStage ? 'active' : ''} ${index < currentStage ? 'clickable' : ''}`}
+            className={`stage ${index === currentStage ? 'active' : ''} ${(index < currentStage || (index === 3 && trainingProgress >= 100)) ? 'clickable' : ''} ${index > currentStage && !(index === 3 && trainingProgress >= 100) ? 'dimmed' : ''}`}
             onClick={() => handleStageClick(index)}
-            role={index < currentStage ? 'button' : undefined}
-            tabIndex={index < currentStage ? 0 : undefined}
+            role={(index < currentStage || (index === 3 && trainingProgress >= 100)) ? 'button' : undefined}
+            tabIndex={(index < currentStage || (index === 3 && trainingProgress >= 100)) ? 0 : undefined}
           >
             <div className="stage-number">{index + 1}</div>
             <div className="stage-name">{stage}</div>
