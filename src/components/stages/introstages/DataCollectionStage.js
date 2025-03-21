@@ -93,7 +93,7 @@ const DataCollectionStage = ({ dataAmount, onAddData, onStartTraining, getBookCo
 
   return (
     <div className="data-collection-stage">
-      <h2 className="stage-title">Step 1: Data Collection – "Feed the Model"</h2>
+      <h2 className="stage-title">Step 2: Data Collection – "Feed the Model"</h2>
       <p className="stage-description">
         Drag different data sources to the computer to build your training dataset.
         The more diverse your data, the more capable your model, but larger datasets

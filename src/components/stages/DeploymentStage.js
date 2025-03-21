@@ -15,7 +15,7 @@ const DeploymentStage = ({
 }) => {
   return (
     <div className="deployment-stage">
-      <h2 className="stage-title">Step 4: Model Completion – "Deployment & Ongoing Costs"</h2>
+      <h2 className="stage-title">Step 5: Model Completion – "Deployment & Ongoing Costs"</h2>
       
       <div className="completion-banner">
         <div className="completion-icon">🎉</div>

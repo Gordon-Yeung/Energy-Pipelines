@@ -27,8 +27,8 @@ const TrainingStage = ({
     <div className="training-stage">
       <h2 className="stage-title">
         {stage === 2 
-          ? 'Step 2: GPU Training – "Powering the Brain"' 
-          : 'Step 3: Carbon Emissions – "What\'s the Footprint?"'}
+          ? 'Step 3: GPU Training – "Powering the Brain"' 
+          : 'Step 4: Carbon Emissions – "What\'s the Footprint?"'}
       </h2>
       
       <div className="training-container">
