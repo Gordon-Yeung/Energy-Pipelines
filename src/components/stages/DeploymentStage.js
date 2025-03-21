@@ -1,9 +1,9 @@
 // components/stages/DeploymentStage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ResourceSummary from '../ui/ResourceSummary';
-import QuerySimulator from '../ui/QuerySimulator';
-import FinalInsight from '../ui/FinalInsight';
 import AnimatedCounter from '../ui/AnimatedCounter';
+import QuerySimulator from '../ui/QuerySimulator';
+import LiveDeploymentDashboard from '../ui/LiveDeploymentDashboard';
 
 const DeploymentStage = ({ 
   dataAmount, 
@@ -17,26 +17,37 @@ const DeploymentStage = ({
   const [totalInferencePower, setTotalInferencePower] = useState(powerUsed);
   const [totalWaterUsed, setTotalWaterUsed] = useState(waterUsed);
   const [totalCO2Emitted, setTotalCO2Emitted] = useState(co2Emitted);
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [hasSubmittedQuery, setHasSubmittedQuery] = useState(false);
 
-  const handleSimulateQuery = (query) => {
+  const handleSimulateQuery = (energy) => {
     // Calculate additional resources used per query
-    const additionalPower = 0.02 * (1 + (dataAmount / 100)); // Power per query
-    const additionalWater = additionalPower * 2; // Water used for cooling
-    const additionalCO2 = additionalPower * 0.5; // CO2 emitted per kWh
+    const additionalPower = energy;
+    const additionalWater = energy * 2; // Water used for cooling
+    const additionalCO2 = energy * 0.5; // CO2 emitted per kWh
 
     // Update totals
     setTotalInferencePower(prev => prev + additionalPower);
     setTotalWaterUsed(prev => prev + additionalWater);
     setTotalCO2Emitted(prev => prev + additionalCO2);
 
+    // Set hasSubmittedQuery to true
+    setHasSubmittedQuery(true);
+
     // Call the parent handler
-    onSimulateQuery(query);
+    onSimulateQuery();
+  };
+
+  const handleUpdateResources = (update) => {
+    setTotalInferencePower(prev => prev + update.power);
+    setTotalWaterUsed(prev => prev + update.water);
+    setTotalCO2Emitted(prev => prev + update.co2);
   };
 
   return (
     <div className="deployment-stage">
       <div className="deployment-header">
-        <h2>Model Deployment</h2>
+        <h2>Model Deployment – Deployment & Ongoing Costs</h2>
         <p className="deployment-description">
           Your model is now deployed and running. But the environmental impact doesn't stop here. 
           Every query, every inference, continues to consume resources.
@@ -77,18 +88,36 @@ const DeploymentStage = ({
           </div>
         </div>
 
+        {/* Query Simulator */}
         <QuerySimulator 
           dataAmount={dataAmount}
           queryCount={queryCount}
           onSimulateQuery={handleSimulateQuery}
         />
 
-        <FinalInsight 
-          totalInferencePower={totalInferencePower}
-          totalWaterUsed={totalWaterUsed}
-          totalCO2Emitted={totalCO2Emitted}
-          queryCount={queryCount}
-        />
+        {/* Deploy Button - Only show after first query */}
+        {hasSubmittedQuery && !showDashboard && (
+          <div className="deploy-section">
+            <button 
+              className="deploy-button"
+              onClick={() => setShowDashboard(true)}
+            >
+              Deploy Model
+            </button>
+          </div>
+        )}
+
+        {/* Live Deployment Dashboard - Embedded */}
+        {showDashboard && (
+          <div className="dashboard-container">
+            <LiveDeploymentDashboard
+              onClose={() => setShowDashboard(false)}
+              initialUsers={0}
+              initialQueries={0}
+              onUpdateResources={handleUpdateResources}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
