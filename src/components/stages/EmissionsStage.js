@@ -23,32 +23,32 @@ const EmissionsStage = ({
       {/* Animated Resource Summary */}
       <div className="resource-summary animated">
         <div className="resource-item">
-          <div className="resource-icon electricity">⚡</div>
-          <div className="resource-details">
+          <div className="resource-icon">⚡</div>
+          <div className="resource-content">
             <div className="resource-value">
-              <AnimatedCounter value={powerUsed} decimals={1} /> kWh
+              <AnimatedCounter value={powerUsed} decimals={1} startFromZero={true} /> kWh
             </div>
-            <div className="resource-label">Electricity Used</div>
+            <div className="resource-label">Electricity Consumed</div>
           </div>
         </div>
 
         <div className="resource-item">
-          <div className="resource-icon water">💧</div>
-          <div className="resource-details">
+          <div className="resource-icon">💧</div>
+          <div className="resource-content">
             <div className="resource-value">
-              <AnimatedCounter value={waterUsed} decimals={0} /> L
+              <AnimatedCounter value={waterUsed} decimals={1} startFromZero={true} /> L
             </div>
-            <div className="resource-label">Water Consumed</div>
+            <div className="resource-label">Water Used</div>
           </div>
         </div>
 
         <div className="resource-item">
-          <div className="resource-icon carbon">🏭</div>
-          <div className="resource-details">
+          <div className="resource-icon">🏭</div>
+          <div className="resource-content">
             <div className="resource-value">
-              <AnimatedCounter value={co2Emitted} decimals={1} /> kg
+              <AnimatedCounter value={co2Emitted} decimals={1} startFromZero={true} /> kg
             </div>
-            <div className="resource-label">CO₂ Emissions</div>
+            <div className="resource-label">CO₂ Emitted</div>
           </div>
         </div>
       </div>

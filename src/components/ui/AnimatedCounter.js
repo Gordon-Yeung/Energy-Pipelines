@@ -1,19 +1,21 @@
 // components/ui/AnimatedCounter.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const AnimatedCounter = ({ value, duration = 2000, decimals = 0 }) => {
-  const [count, setCount] = useState(0);
+const AnimatedCounter = ({ value, duration = 2000, decimals = 0, startFromZero = false }) => {
+  const [count, setCount] = useState(startFromZero ? 0 : value);
+  const previousValue = useRef(value);
   
   useEffect(() => {
     let startTime;
     let animationFrame;
+    let startValue = startFromZero ? 0 : previousValue.current;
     
     const animate = (currentTime) => {
       if (!startTime) startTime = currentTime;
       const progress = (currentTime - startTime) / duration;
       
       if (progress < 1) {
-        const currentValue = value * progress;
+        const currentValue = startValue + (value - startValue) * progress;
         setCount(currentValue);
         animationFrame = requestAnimationFrame(animate);
       } else {
@@ -22,13 +24,14 @@ const AnimatedCounter = ({ value, duration = 2000, decimals = 0 }) => {
     };
     
     animationFrame = requestAnimationFrame(animate);
+    previousValue.current = value;
     
     return () => {
       if (animationFrame) {
         cancelAnimationFrame(animationFrame);
       }
     };
-  }, [value, duration]);
+  }, [value, duration, startFromZero]);
 
   return (
     <span>
