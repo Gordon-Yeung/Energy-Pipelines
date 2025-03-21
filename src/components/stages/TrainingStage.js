@@ -13,14 +13,57 @@ const TrainingStage = ({
   waterUsed, 
   co2Emitted, 
   gpuCount,
-  onAddGpus,
-  getPowerComparison,
-  getWaterComparison
+  onAddGpus
 }) => {
   
   // Handle adding more GPUs to accelerate training
   const handleAddGpus = (amount) => {
     onAddGpus(amount);
+  };
+
+  // Get power comparison based on thresholds
+  const getPowerComparison = () => {
+    if (powerUsed < 0.1) {
+      return null; // Don't show comparison for negligible usage
+    } else if (powerUsed < 1) {
+      return "≈ charging your smartphone 3 times";
+    } else if (powerUsed < 5) {
+      return "≈ running a refrigerator for a day";
+    } else if (powerUsed < 20) {
+      return "≈ powering an average home for a month";
+    } else if (powerUsed < 50) {
+      return "≈ powering 3 homes for a month";
+    } else {
+      return `≈ powering ${Math.round(powerUsed/15)} homes for a month`;
+    }
+  };
+
+  // Get water comparison based on thresholds
+  const getWaterComparison = () => {
+    if (waterUsed < 50) {
+      return null; // Don't show comparison for negligible usage
+    } else if (waterUsed < 150) {
+      return "≈ taking a 5-minute shower";
+    } else if (waterUsed < 500) {
+      return "≈ filling a bathtub";
+    } else if (waterUsed < 1000) {
+      return "≈ watering a garden for a week";
+    } else if (waterUsed < 5000) {
+      return "≈ filling a small swimming pool";
+    } else {
+      return `≈ filling ${Math.round(waterUsed/5000)} swimming pools`;
+    }
+  };
+
+  // Get CO2 comparison
+  const getCO2Comparison = () => {
+    if (co2Emitted < 1) {
+      return null; // Don't show comparison for negligible emissions
+    } else if (co2Emitted < 5) {
+      return `≈ driving a car for ${Math.round(co2Emitted * 4)} km`;
+    } else {
+      return `≈ ${Math.round(co2Emitted/2)} NY-London flights`;
+    }
   };
   
   return (
@@ -83,35 +126,63 @@ const TrainingStage = ({
         {/* Resource Usage Meters */}
         <div className="resources-section">
           <h3 className="section-title">Resource Consumption</h3>
-          <div className="resource-meters">
-            <ResourceMeter 
-              label="Electricity"
-              value={Math.round(powerUsed)}
-              unit="kWh"
-              maxValue={500}
-              color="bg-yellow-500"
-              comparison={`≈ ${Math.round(powerUsed/30)} days of home electricity`}
-              detailedComparison={getPowerComparison()}
-            />
+          <div className="resource-cards">
+            <div className="resource-card">
+              <div className="resource-card-header">
+                <div className="resource-icon electricity">⚡</div>
+                <div className="resource-info">
+                  <div className="resource-label">Electricity Used</div>
+                  <div className="resource-value">
+                    {Math.round(powerUsed * 10) / 10}
+                    <span className="resource-unit">kWh</span>
+                  </div>
+                </div>
+              </div>
+              {getPowerComparison() && (
+                <div className="resource-comparison">
+                  <span className="resource-comparison-icon">{powerUsed < 5 ? "📱" : "🏠"}</span>
+                  {getPowerComparison()}
+                </div>
+              )}
+            </div>
             
-            <ResourceMeter 
-              label="Water"
-              value={Math.round(waterUsed)}
-              unit="liters"
-              maxValue={500000}
-              color="bg-blue-500"
-              comparison={`≈ drinking water for ${Math.round(waterUsed/500)} people per day`}
-              detailedComparison={getWaterComparison()}
-            />
+            <div className="resource-card">
+              <div className="resource-card-header">
+                <div className="resource-icon water">💧</div>
+                <div className="resource-info">
+                  <div className="resource-label">Water Consumed</div>
+                  <div className="resource-value">
+                    {Math.round(waterUsed)}
+                    <span className="resource-unit">liters</span>
+                  </div>
+                </div>
+              </div>
+              {getWaterComparison() && (
+                <div className="resource-comparison">
+                  <span className="resource-comparison-icon">{waterUsed < 500 ? "🚿" : "🏊"}</span>
+                  {getWaterComparison()}
+                </div>
+              )}
+            </div>
             
-            <ResourceMeter 
-              label="CO₂ Emissions"
-              value={Math.round(co2Emitted)}
-              unit="kg"
-              maxValue={100}
-              color="bg-gray-500"
-              comparison={`≈ ${Math.round(co2Emitted/2)} NY-London flights`}
-            />
+            <div className="resource-card">
+              <div className="resource-card-header">
+                <div className="resource-icon carbon">🏭</div>
+                <div className="resource-info">
+                  <div className="resource-label">CO₂ Emissions</div>
+                  <div className="resource-value">
+                    {Math.round(co2Emitted * 10) / 10}
+                    <span className="resource-unit">kg</span>
+                  </div>
+                </div>
+              </div>
+              {getCO2Comparison() && (
+                <div className="resource-comparison">
+                  <span className="resource-comparison-icon">{co2Emitted < 5 ? "🚗" : "✈️"}</span>
+                  {getCO2Comparison()}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         
