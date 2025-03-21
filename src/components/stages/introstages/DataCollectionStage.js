@@ -131,12 +131,16 @@ const DataCollectionStage = ({ dataAmount, onAddData, onStartTraining, getBookCo
             comparison={getBookComparison()}
           />
           
-          {dataAmount > 0 && (
+          {dataAmount >= 10 && (
             <button 
               className="start-training-button"
               onClick={onStartTraining}
             >
-              Start Training
+              <div className="button-content">
+                <span className="button-main-text">Start Training</span>
+                <span className="button-sub-text">Begin the Model Training Process</span>
+              </div>
+              <div className="button-arrow">→</div>
             </button>
           )}
         </div>
