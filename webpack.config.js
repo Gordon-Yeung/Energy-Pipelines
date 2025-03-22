@@ -6,6 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
+    publicPath: './' // Add this for GitHub Pages deployment
   },
   module: {
     rules: [
@@ -38,6 +39,7 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     port: 8080,
-    hot: true
+    hot: true,
+    historyApiFallback: true // Add this for client-side routing
   }
-}; 
+};
