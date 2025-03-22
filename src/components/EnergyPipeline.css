@@ -1085,35 +1085,55 @@
 }
 
 .final-insight {
-  display: none;
+  display: block;
 }
 
 .final-insight-title {
-  display: none;
+  display: block;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .insight-content p {
-  display: none;
+  display: block;
+  line-height: 1.6;
+  margin-bottom: 24px;
 }
 
 .insight-key-points {
-  display: none;
+  display: block;
+  margin: 24px 0;
 }
 
 .key-point {
-  display: none;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #f7fafc;
+  border-radius: 8px;
 }
 
 .key-point-icon {
-  display: none;
+  display: block;
+  font-size: 24px;
+  margin-right: 12px;
+  flex-shrink: 0;
 }
 
 .key-point-text {
-  display: none;
+  display: block;
+  flex: 1;
+  line-height: 1.5;
 }
 
 .insight-conclusion {
-  display: none;
+  display: block;
+  font-style: italic;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
 }
 
 /* Training Complete Popup */

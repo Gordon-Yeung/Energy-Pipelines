@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import FinalInsight from './FinalInsight';
 
 const LiveDeploymentDashboard = ({ 
   onClose, 
@@ -90,46 +91,11 @@ const LiveDeploymentDashboard = ({
         Speed Up Growth
       </button>
       
+      {/* Use the FinalInsight component directly in a modal wrapper */}
       {showFinalInsight && (
         <div className="final-insight-popup">
           <div className="final-insight-content">
-            <h3>Environmental Impact at Scale</h3>
-            <p>
-              As your AI model scales to {users.toLocaleString()} users and processes {queries.toLocaleString()} queries, 
-              the environmental impact becomes significant. Let's break down the costs:
-            </p>
-            
-            <div className="insight-key-points">
-              <div className="key-point">
-                <div className="key-point-icon">⚡</div>
-                <div className="key-point-text">
-                  <strong>Operational Costs</strong>
-                  Each query consumes significant energy, and at scale, this adds up to massive power requirements.
-                </div>
-              </div>
-              
-              <div className="key-point">
-                <div className="key-point-icon">💧</div>
-                <div className="key-point-text">
-                  <strong>Water Usage</strong>
-                  Cooling systems for AI infrastructure consume vast amounts of water, especially in data centers.
-                </div>
-              </div>
-              
-              <div className="key-point">
-                <div className="key-point-icon">🏭</div>
-                <div className="key-point-text">
-                  <strong>Carbon Emissions</strong>
-                  The energy consumption leads to significant CO2 emissions, contributing to climate change.
-                </div>
-              </div>
-            </div>
-            
-            <div className="insight-conclusion">
-              The environmental impact of AI at scale is substantial. Consider implementing energy-efficient practices 
-              and exploring renewable energy sources for your infrastructure.
-            </div>
-            
+            <FinalInsight />
             <button onClick={handleCloseInsight}>Close</button>
           </div>
         </div>
